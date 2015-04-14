@@ -1,3 +1,3 @@
 # Notepad Mini Version
 
-Just a tini version of the original microsoft notepad i have been working on
+A tiny copy of the original Microsoft Notepad I have been working on to practice my skills in C and in the Windows API
