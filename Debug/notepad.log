@@ -1,0 +1,3 @@
+﻿cl : befehlszeile warning D9035: Die Option "Gm" ist veraltet und wird in einer der nächsten Versionen entfernt.
+  notepad.c
+  notepad.vcxproj -> C:\Users\Walter\git\Notepad\.\Debug\notepad.exe
