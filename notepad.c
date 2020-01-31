@@ -39,9 +39,9 @@ BOOL LoadTextFileToEdit(HWND hEdit, LPCTSTR pszFileName)
 
 				if(ReadFile(hFile, pszFileText, dwFileSize, &dwRead, NULL))
 				{
-					pszFileText[dwFileSize] = 0; // Add null terminator
+					pszFileText[dwFileSize] = 0;
 					if(SetWindowText(hEdit, pszFileText))
-						bSuccess = TRUE; // It worked!
+						bSuccess = TRUE;
 				}
 				GlobalFree(pszFileText);
 			}
@@ -178,10 +178,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			int statwidths[] = {100, -1};
 
 			CLIENTCREATESTRUCT ccs;
-
-			// Create MDI Client
-
-			// Find window menu where children will be listed
 			ccs.hWindowMenu  = GetSubMenu(GetMenu(hwnd), 2);
 			ccs.idFirstChild = ID_MDI_FIRSTCHILD;
 
@@ -192,16 +188,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 			if(g_hMDIClient == NULL)
 				MessageBox(hwnd, "Could not create MDI client.", "Error", MB_OK | MB_ICONERROR);
-
-			// Create Toolbar
-
 			hTool = CreateWindowEx(0, TOOLBARCLASSNAME, NULL, WS_CHILD | WS_VISIBLE, 0, 0, 0, 0,
 				hwnd, (HMENU)IDC_MAIN_TOOL, GetModuleHandle(NULL), NULL);
 			if(hTool == NULL)
 				MessageBox(hwnd, "Could not create tool bar.", "Error", MB_OK | MB_ICONERROR);
-
-			// Send the TB_BUTTONSTRUCTSIZE message, which is required for
-			// backward compatibility.
 			SendMessage(hTool, TB_BUTTONSTRUCTSIZE, (WPARAM)sizeof(TBBUTTON), 0);
 			
 			tbab.hInst = HINST_COMMCTRL;
@@ -249,9 +239,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			HWND hMDI;
 			int iMDIHeight;
 			RECT rcClient;
-
-			// Size toolbar and get height
-
 			hTool = GetDlgItem(hwnd, IDC_MAIN_TOOL);
 			SendMessage(hTool, TB_AUTOSIZE, 0, 0);
 
@@ -366,11 +353,11 @@ LRESULT CALLBACK MDIChildWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 
 			hMenu = GetMenu(g_hMainWindow);
 			if(hwnd == (HWND)lParam)
-			{	   //being activated, enable the menus
+			{
 				EnableFlag = MF_ENABLED;
 			}
 			else
-			{						   //being de-activated, gray the menus
+			{
 				EnableFlag = MF_GRAYED;
 			}
 
@@ -410,9 +397,6 @@ LRESULT CALLBACK MDIChildWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 		{
 			HWND hEdit;
 			RECT rcClient;
-
-			// Calculate remaining height and size edit
-
 			GetClientRect(hwnd, &rcClient);
 
 			hEdit = GetDlgItem(hwnd, IDC_CHILD_EDIT);
