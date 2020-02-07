@@ -63,7 +63,6 @@ BOOL SaveTextFileFromEdit(HWND hEdit, LPCTSTR pszFileName)
 		DWORD dwTextLength;
 
 		dwTextLength = GetWindowTextLength(hEdit);
-		// No need to bother if there's no text.
 		if(dwTextLength > 0)
 		{
 			LPSTR pszText;
@@ -215,9 +214,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			tbb[2].idCommand = ID_FILE_SAVEAS;
 
 			SendMessage(hTool, TB_ADDBUTTONS, sizeof(tbb)/sizeof(TBBUTTON), (LPARAM)&tbb);
-
-			// Create Status bar
-
 			hStatus = CreateWindowEx(0, STATUSCLASSNAME, NULL,
 				WS_CHILD | WS_VISIBLE | SBARS_SIZEGRIP, 0, 0, 0, 0,
 				hwnd, (HMENU)IDC_MAIN_STATUS, GetModuleHandle(NULL), NULL);
@@ -244,17 +240,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 			GetWindowRect(hTool, &rcTool);
 			iToolHeight = rcTool.bottom - rcTool.top;
-
-			// Size status bar and get height
-
 			hStatus = GetDlgItem(hwnd, IDC_MAIN_STATUS);
 			SendMessage(hStatus, WM_SIZE, 0, 0);
 
 			GetWindowRect(hStatus, &rcStatus);
 			iStatusHeight = rcStatus.bottom - rcStatus.top;
-
-			// Calculate remaining height and size edit
-
 			GetClientRect(hwnd, &rcClient);
 
 			iMDIHeight = rcClient.bottom - iToolHeight - iStatusHeight;
@@ -333,9 +323,6 @@ LRESULT CALLBACK MDIChildWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 		{
 			HFONT hfDefault;
 			HWND hEdit;
-
-			// Create Edit Control
-
 			hEdit = CreateWindowEx(WS_EX_CLIENTEDGE, "EDIT", "", 
 				WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL, 
 				0, 0, 100, 100, hwnd, (HMENU)IDC_CHILD_EDIT, GetModuleHandle(NULL), NULL);
